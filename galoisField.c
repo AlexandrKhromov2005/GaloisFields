@@ -127,7 +127,8 @@ GFElement multiplyGFE(GFElement* poly1, GFElement* poly2, GFElement* irrpoly, GF
         }
     }
     updateLength(&result);
-    return modGFE(&result, irrpoly, p);
+    result = modGFE(&result, irrpoly, p);
+    return result;
 }
 
 void initGF(GF_TYPE p, GF_TYPE n, GF* galoisField) {
@@ -160,18 +161,10 @@ void initGF(GF_TYPE p, GF_TYPE n, GF* galoisField) {
     initGFE(&galoisField->irreduciblePoly, n + 1, initIrrPol);
     bool flag = false;
     while(!flag){
-        //printf("Before increase: ");
-        //printGFE(&galoisField->irreduciblePoly);
-        increaseGFE(&galoisField->irreduciblePoly, p);
-        //printf("After increase: ");
-        //printGFE(&galoisField->irreduciblePoly);        
+        increaseGFE(&galoisField->irreduciblePoly, p);       
         flag = true;
         for(size_t i = p; i < galoisField->size; i++){
-            //printf("Element %zu: ", i);
-            //printGFE(&galoisField->field[i]);
             GFElement remainder = modGFE(&galoisField->irreduciblePoly, &galoisField->field[i], p);
-            //printf("Remainder: ");
-            //printGFE(&remainder);
             if (remainder.coeffs[0] == 0 && remainder.length == 1){
                 flag = false;
                 break;
