@@ -43,7 +43,6 @@
 Если программа запускается без аргументов, откроется интерактивное меню:
 main.exe
 
-Меню:
 === Menu ===
 1. Crypto (Encrypt/Decrypt)
 2. Explore Galois Field
